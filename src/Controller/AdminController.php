@@ -43,10 +43,25 @@ class AdminController extends \Pimcore\Bundle\AdminBundle\Controller\AdminContro
         $parent = Service::hasInheritableParentObject($object);
         $getter = 'get' . ucfirst($key);
 
-        $value = $fielddefinition->getDiffDataForEditmode($object->$getter(), $object, [], $objectFromVersion);
-        foreach ($value as $el) {
-            $key = $el['key'];
-            $this->objectData[$key] = $el;
+        try
+        {
+            $value = $fielddefinition->getDiffDataForEditmode($object->$getter(), $object, [], $objectFromVersion);
+            foreach ($value as $el) {
+                $key = $el['key'];
+                $this->objectData[$key] = $el;
+            }
+        }
+        catch(\Exception $e)
+        {
+            $this->objectData[$key] = array(
+                "data" => null,
+                "disabled" => null,
+                "field" => $key,
+                "key" => $key,
+                "type" => "input",
+                "title" => $key,
+                "value" => "NOT SUPPORTED",
+            );
         }
     }
 
