@@ -27,7 +27,7 @@ class ObjectMergerBundle extends AbstractPimcoreBundle
      */
     protected function getComposerPackageName(): string
     {
-        return 'pimcore/object-merger';
+        return 'torqit/object-merger';
     }
 
     /**
